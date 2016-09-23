@@ -1,0 +1,14 @@
+{
+  "name": "game-base",
+  "description": "Basic building blocks for high-performance rendering",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "benchmark": "^2.1.1",
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2",
+    "sinon": "^1.17.6"
+  }
+}
