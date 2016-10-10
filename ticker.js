@@ -8,12 +8,12 @@ class Ticker {
     this.tick = this.tick.bind(this);
   }
   tick(now) {
+    this._rafId = requestAnimationFrame(this.tick);
     if (this._lastTime === null)
       this._lastTime = now;
     const elapsed = now - this._lastTime;
     this.fire(elapsed);
     this._lastTime = now;
-    this._rafId = requestAnimationFrame(this.tick);
   }
   fire(elapsed) {
     const invoke = fn => fn(elapsed);
