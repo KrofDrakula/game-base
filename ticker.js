@@ -1,8 +1,9 @@
 class Ticker {
-  constructor() {
+  constructor(autostart = true) {
     this.next = [];
     this.update = [];
     this.render = [];
+    this._autostart = autostart;
     this._lastTime = null;
     this._rafId = null;
     this.tick = this.tick.bind(this);
@@ -24,12 +25,16 @@ class Ticker {
   }
   register(listener, phase = 'render') {
     this[phase].push(listener);
+    if (this._autostart)
+      this.start();
   }
   unregister(listener, phase = 'render') {
     let arr = this[phase],
         idx = arr.indexOf(listener);
     if (idx > -1)
       arr.splice(idx, 1);
+    if (this._autostart && this.next.length == 0 && this.update.length == 0 && this.render.length == 0)
+      this.stop();
   }
   start() {
     this._rafId = requestAnimationFrame(this.tick);
