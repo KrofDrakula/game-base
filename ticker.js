@@ -1,9 +1,10 @@
 class Ticker {
-  constructor(autostart = true) {
+  constructor(autostart = false) {
     this.next = [];
     this.update = [];
     this.render = [];
     this._autostart = autostart;
+    this._running = false;
     this._lastTime = null;
     this._rafId = null;
     this.tick = this.tick.bind(this);
@@ -37,11 +38,14 @@ class Ticker {
       this.stop();
   }
   start() {
+    if (this._running) return;
     this._rafId = requestAnimationFrame(this.tick);
+    this._running = true;
   }
   stop() {
     cancelAnimationFrame(this._rafId);
     this._rafId = null;
+    this._running = false;
   }
 }
 
