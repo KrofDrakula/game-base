@@ -3,24 +3,25 @@ const sinon = require('sinon');
 const Ticker = require('../ticker.js');
 
 describe('Ticker', () => {
-  
+
   beforeEach(() => {
     global.requestAnimationFrame = sinon.spy(() => 1337);
     global.cancelAnimationFrame = sinon.spy();
   });
-  
+
   afterEach(() => {
     delete global.requestAnimationFrame;
     delete global.cancelAnimationFrame;
   });
-  
+
   it('should register listeners to render phase by default', () => {
     let t = new Ticker, f = () => {};
     t.register(f);
     expect(t.render.length).to.equal(1);
     expect(t.render[0]).to.equal(f);
     expect(t.update).to.be.empty;
-    expect(t.next).to.be.empty;
+    expect(t.head).to.be.empty;
+    expect(t.tail).to.be.empty;
   });
   it('should register listeners to requested phase', () => {
     let t = new Ticker, f = () => {};
@@ -28,7 +29,8 @@ describe('Ticker', () => {
     expect(t.render).to.be.empty;
     expect(t.update.length).to.equal(1);
     expect(t.update[0]).to.equal(f);
-    expect(t.next).to.be.empty;
+    expect(t.head).to.be.empty;
+    expect(t.tail).to.be.empty;
   });
   it('should remove listeners from default phase if found', () => {
     let t = new Ticker, f = () => {};
@@ -54,19 +56,29 @@ describe('Ticker', () => {
     let t = new Ticker, collector = sinon.spy();
     t.register(() => collector('render'), 'render');
     t.register(() => collector('update'), 'update');
-    t.register(() => collector('next'), 'next');
+    t.register(() => collector('head'), 'head');
+    t.register(() => collector('tail'), 'tail');
     t.tick(1);
-    expect(collector.firstCall.calledWith('next')).to.be.true;
+    expect(collector.firstCall.calledWith('head')).to.be.true;
     expect(collector.secondCall.calledWith('update')).to.be.true;
     expect(collector.thirdCall.calledWith('render')).to.be.true;
+    expect(collector.lastCall.calledWith('tail')).to.be.true;
   });
-  it('should unregister next listener after tick', () => {
+  it('should unregister head listener after tick', () => {
     let t = new Ticker, f = sinon.spy();
-    t.register(f, 'next');
-    expect(t.next).to.contain(f);
+    t.register(f, 'head');
+    expect(t.head).to.contain(f);
     t.tick(1);
     expect(f.calledOnce).to.be.true;
-    expect(t.next).to.be.empty;
+    expect(t.head).to.be.empty;
+  });
+  it('should unregister tail listener after tick', () => {
+    let t = new Ticker, f = sinon.spy();
+    t.register(f, 'tail');
+    expect(t.tail).to.contain(f);
+    t.tick(1);
+    expect(f.calledOnce).to.be.true;
+    expect(t.tail).to.be.empty;
   });
   it('should register itself for rAF when starting', () => {
     let t = new Ticker, raf = global.requestAnimationFrame;

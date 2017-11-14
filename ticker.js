@@ -21,11 +21,11 @@ class Ticker {
   fire(elapsed) {
     const invoke = fn => fn(elapsed);
     this.head.forEach(invoke);
-    this.head.length = 0;
+    this.head = [];
     this.update.forEach(invoke);
     this.render.forEach(invoke);
     this.tail.forEach(invoke);
-    this.tail.length = 0;
+    this.tail = [];
   }
   register(listener, phase = 'render') {
     this[phase].push(listener);
