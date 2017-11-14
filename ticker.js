@@ -1,10 +1,9 @@
 class Ticker {
-  constructor(autostart = false) {
+  constructor() {
     this.head = [];
     this.update = [];
     this.render = [];
     this.tail = [];
-    this._autostart = autostart;
     this._running = false;
     this._lastTime = null;
     this._rafId = null;
@@ -29,16 +28,12 @@ class Ticker {
   }
   register(listener, phase = 'render') {
     this[phase].push(listener);
-    if (this._autostart)
-      this.start();
   }
   unregister(listener, phase = 'render') {
     let arr = this[phase],
         idx = arr.indexOf(listener);
     if (idx > -1)
       arr.splice(idx, 1);
-    if (this._autostart && this.head.length && this.update.length && this.render.length && this.tail.length)
-      this.stop();
   }
   start() {
     if (this._running) return;
