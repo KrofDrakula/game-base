@@ -19,12 +19,14 @@ class Ticker {
   }
   fire(elapsed) {
     const invoke = fn => fn(elapsed);
-    this.head.forEach(invoke);
+    const heads = Array.from(this.head);
     this.head = [];
+    heads.forEach(invoke);
     this.update.forEach(invoke);
     this.render.forEach(invoke);
-    this.tail.forEach(invoke);
+    const tails = Array.from(this.tail);
     this.tail = [];
+    tails.forEach(invoke);
   }
   register(listener, phase = 'render') {
     this[phase].push(listener);
