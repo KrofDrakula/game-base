@@ -1,8 +1,9 @@
 class Ticker {
   constructor(autostart = false) {
-    this.next = [];
+    this.head = [];
     this.update = [];
     this.render = [];
+    this.tail = [];
     this._autostart = autostart;
     this._running = false;
     this._lastTime = null;
@@ -19,10 +20,12 @@ class Ticker {
   }
   fire(elapsed) {
     const invoke = fn => fn(elapsed);
-    this.next.forEach(invoke);
+    this.head.forEach(invoke);
+    this.head.length = 0;
     this.update.forEach(invoke);
     this.render.forEach(invoke);
-    this.next.length = 0;
+    this.tail.forEach(invoke);
+    this.tail.length = 0;
   }
   register(listener, phase = 'render') {
     this[phase].push(listener);
@@ -34,7 +37,7 @@ class Ticker {
         idx = arr.indexOf(listener);
     if (idx > -1)
       arr.splice(idx, 1);
-    if (this._autostart && this.next.length == 0 && this.update.length == 0 && this.render.length == 0)
+    if (this._autostart && this.head.length && this.update.length && this.render.length && this.tail.length)
       this.stop();
   }
   start() {
