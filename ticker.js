@@ -31,11 +31,13 @@ Ticker.prototype.fire = function(elapsed) {
   tails.forEach(invoke);
 };
 
-Ticker.prototype.register = function(listener, phase = "render") {
+Ticker.prototype.register = function(listener, phase) {
+  phase = phase || "render";
   this[phase].push(listener);
 };
 
-Ticker.prototype.unregister = function(listener, phase = "render") {
+Ticker.prototype.unregister = function(listener, phase) {
+  phase = phase || "render";
   var arr = this[phase],
     idx = arr.indexOf(listener);
   if (idx > -1) arr.splice(idx, 1);
