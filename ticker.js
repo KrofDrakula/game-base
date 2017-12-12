@@ -18,7 +18,9 @@ Ticker.prototype.tick = function(now) {
 };
 
 Ticker.prototype.fire = function(elapsed) {
-  var invoke = fn => fn(elapsed);
+  var invoke = function(fn) {
+    return fn(elapsed);
+  };
   var heads = Array.from(this.head);
   this.head = [];
   heads.forEach(invoke);
