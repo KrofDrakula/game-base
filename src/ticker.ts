@@ -3,12 +3,12 @@ export type Phase = "head" | "update" | "render" | "tail";
 export type Listener = (delta: number) => void;
 
 class Ticker {
-  phases: Record<Phase, Set<Listener>> = {
-    head: new Set(),
-    update: new Set(),
-    render: new Set(),
-    tail: new Set(),
-  };
+  phases = Object.freeze({
+    head: new Set<Listener>(),
+    update: new Set<Listener>(),
+    render: new Set<Listener>(),
+    tail: new Set<Listener>(),
+  });
 
   #running: boolean = false;
 
