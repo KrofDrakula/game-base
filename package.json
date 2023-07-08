@@ -2,7 +2,7 @@
   "name": "game-base",
   "description": "Basic building blocks for high-performance rendering",
   "author": "Klemen Slavic <krof.drakula@gmail.com>",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "type": "module",
   "repository": "git@github.com:krofdrakula/game-base.git",
