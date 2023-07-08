@@ -2,19 +2,20 @@
   "name": "game-base",
   "description": "Basic building blocks for high-performance rendering",
   "author": "Klemen Slavic <krof.drakula@gmail.com>",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "type": "module",
   "repository": "git@github.com:krofdrakula/game-base.git",
   "files": [
     "dist"
   ],
-  "main": "./dist/game-base.umd.cjs",
-  "module": "./dist/game-base.js",
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
   "exports": {
     ".": {
-      "import": "./dist/game-base.js",
-      "require": "./dist/game-base.umd.cjs"
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs",
+      "default": "./dist/index.js"
     }
   },
   "types": "./dist/index.d.ts",
