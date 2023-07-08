@@ -17,6 +17,7 @@
       "require": "./dist/game-base.umd.cjs"
     }
   },
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "vite build",
     "test": "vitest",

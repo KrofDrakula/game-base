@@ -7,7 +7,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       name: "GameBase",
-      fileName: "game-base",
+      fileName: "index",
     },
     sourcemap: true,
     target: "esnext",
