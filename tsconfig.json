@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": ["ESNext", "DOM"],
+    "strict": true,
+    "module": "ESNext",
+    "moduleResolution": "NodeNext"
+  }
+}
